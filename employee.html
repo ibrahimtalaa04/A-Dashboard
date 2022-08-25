@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!----- ============ CSS ============-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.12.1/fh-3.2.4/r-2.3.0/rr-1.2.8/sl-1.4.0/sr-1.1.1/datatables.min.css"/>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!----- ============ Icons CSS ============-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <style>
+
+
+    </style>
+
+    <title>Admin Dashboard Panel</title>
+</head>
+
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="Images/logo.png" alt="">
+            </div>
+            <span class="logo_name">A-Dashboard</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="index.html">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dashboard</span>
+                </a></li>
+                <li><a href="employee.html">
+                    <i class="uil uil-user"></i>
+                    <span class="link-name">Employees</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Projects</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-chat"></i>
+                    <span class="link-name">Inbox</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-question"></i>
+                    <span class="link-name">FAQ</span>
+                </a></li>
+
+                
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="#">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Log out</span>
+                </a></li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark mode</span>
+                    </a>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidepar-toggle"></i>
+            <div class="search-box">
+                <i class="uil uil-search "></i>
+                <input type="text" placeholder="Search here ...">
+            </div>
+
+            <img src="Images/logo.png" alt="">
+        </div>
+        
+        <div class="dash-content">
+            <div class="overview">
+            </div>
+            <div class="title">
+                <i class="uil uil-user"></i>
+                <span class="text">Recent Employees</span>
+            </div>
+            <table id="table" class="row-border stripe hover">
+                <thead>
+                    <tr>
+                        <th>SSN</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Department</th>
+                        <th>salary</th>
+                        <th>process</th>
+                    </tr>
+                </thead>
+            </table>
+        
+        </div>
+    </section>
+    
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.12.1/fh-3.2.4/r-2.3.0/rr-1.2.8/sl-1.4.0/sr-1.1.1/datatables.min.js"></script>    
+    <script src="js/script.js"></script>
+    <script src="js/employees.js"></script>
+    <script>
+    $(document).ready( function () {
+        $('#table').DataTable({
+            data:employees,
+            scrollY:430,
+            lengthMenu:[10,15,20,30,40,50],
+            searching: false,
+            select: true,
+            columns: [
+            { data: 'ssn' },
+            { data: 'first_name' },
+            { data: 'last_name' },
+            { data: 'department' },
+            { data: 'salary' },
+            { 
+                data: 'ssn', render: function (data, type, row) {
+                    return `<p>${data}</p>`;
+                }
+            }
+    ]
+        });
+        $("#empCount").html(employees.length);
+    } 
+    );
+    </script>
+</body>
+</html>
