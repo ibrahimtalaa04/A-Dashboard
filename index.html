@@ -1,13 +1,22 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!----- ============ CSS ============-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.12.1/fh-3.2.4/r-2.3.0/rr-1.2.8/sl-1.4.0/sr-1.1.1/datatables.min.css"/>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/style.css">
     <!----- ============ Icons CSS ============-->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <style>
+        #table_paginate>*>*,#table_paginate>*,table thead tr th,#tablem tbody tr td,.dataTables_wrapper .dataTables_length select,.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+        color:var(--text-color) !important;
+    }
+
+    </style>
 
     <title>Admin Dashboard Panel</title>
 </head>
@@ -22,26 +31,27 @@
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="#">
+                <li><a href="index.html">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dashboard</span>
                 </a></li>
-                <li><a href="#">
-                    <i class="uil uil-files-landscapes"></i>
-                    <span class="link-name">Content</span>
+                <li><a href="employee.html">
+                    <i class="uil uil-user"></i>
+                    <span class="link-name">Employees</span>
                 </a></li>
                 <li><a href="#">
                     <i class="uil uil-chart"></i>
-                    <span class="link-name">Analytics</span>
+                    <span class="link-name">Projects</span>
                 </a></li>
                 <li><a href="#">
-                    <i class="uil uil-thumbs-up"></i>
-                    <span class="link-name">Likes</span>
+                    <i class="uil uil-chat"></i>
+                    <span class="link-name">Inbox</span>
                 </a></li>
                 <li><a href="#">
-                    <i class="uil uil-comments"></i>
-                    <span class="link-name">Comment</span>
+                    <i class="uil uil-question"></i>
+                    <span class="link-name">FAQ</span>
                 </a></li>
+
                 
             </ul>
 
@@ -63,6 +73,7 @@
             </ul>
         </div>
     </nav>
+
     <section class="dashboard">
         <div class="top">
             <i class="uil uil-bars sidepar-toggle"></i>
@@ -73,6 +84,7 @@
 
             <img src="Images/logo.png" alt="">
         </div>
+        
         <div class="dash-content">
             <div class="overview">
                 <div class="title">
@@ -81,28 +93,27 @@
                 </div>
                 <div class="boxes">
                     <div class="box box1">
-                        <i class="uil uil-thumbs-up"></i>
-                        <span class="text">Total Likes</span>
-                        <span class="number">50,120</span>
+                        <i class="uil uil-user"></i>
+                        <span class="text">Total Employees</span>
+                        <span class="number" id="empCount"></span>
                     </div>
                     <div class="box box2">
-                        <i class="uil uil-comments"></i>
-                        <span class="text">Comments</span>
-                        <span class="number">30,120</span>
+                        <i class="uil uil-users-alt"></i>
+                        <span class="text">Departments</span>
+                        <span class="number">16</span>
                     </div>
                     <div class="box box3">
-                        <i class="uil uil-share"></i>
-                        <span class="text">Total Share</span>
-                        <span class="number">10,120</span>
+                        <i class="uil uil-eye"></i>
+                        <span class="text">Total Views</span>
+                        <span class="number">1120</span>
                     </div>
                 </div>
             </div>
-            <div class="activity">
-                <div class="title">
-                    <i class="uil uil-clock"></i>
-                    <span class="text">Recent Activity</span>
-                </div>
-
+            <div class="title">
+                <i class="uil uil-user"></i>
+                <span class="text">Recent Employees</span>
+            </div>
+            <!-- <div class="activity">
                 <div class="activity-data">
                     <div class="data names">
                         <span class="data-title">Name</span>
@@ -155,9 +166,53 @@
                         <span class="data-list">Liked</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+            <table id="tablem" class="row-border stripe hover">
+                <thead>
+                    <tr>
+                        <th>SSN</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Department</th>
+                        <th>salary</th>
+                    </tr>
+                </thead>
+            </table>
+        
         </div>
     </section>
+    
+
+    
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.12.1/fh-3.2.4/r-2.3.0/rr-1.2.8/sl-1.4.0/sr-1.1.1/datatables.min.js"></script>    
     <script src="js/script.js"></script>
+    <script src="js/employees.js"></script>
+    <script>
+        var emp=[];
+    for(var i=0;i<10;i++)
+    {
+        emp.push(employees[i]);
+    }
+    $(document).ready( function () {
+        $('#tablem').DataTable({
+            data:emp,
+            scrollY:430,
+            searching:false,
+            showing:false,
+            info:false,
+            paging: false,
+            columns: [
+            { data: 'ssn' },
+            { data: 'first_name' },
+            { data: 'last_name' },
+            { data: 'department' },
+            { data: 'salary' }
+    ]
+        });
+        $("#empCount").html(employees.length);
+    } 
+    );
+    </script>
 </body>
 </html>
